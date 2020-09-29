@@ -12,6 +12,6 @@ fn main() {
   ).get_matches();
 
   if let Some(matches) = matches.subcommand_matches("build") {
-    // run the build subcommand
+    let input = matches.value_of("INPUT").unwrap();
   }
 }
