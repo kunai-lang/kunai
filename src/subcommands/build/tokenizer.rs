@@ -3,6 +3,7 @@ use regex::{Captures, Regex, Replacer};
 
 use std::char;
 use std::u32;
+use crate::output;
 
 pub struct Token {
   pub token: String,
@@ -102,6 +103,7 @@ pub fn tokenize(code: String, file_name: &str) -> Vec<Token> {
         index += 1;
       }
 
+      let mut found = false;
       for exp in &regices {
         if exp.exp.is_match(substr) {
           tokens.push(Token {
@@ -111,7 +113,13 @@ pub fn tokenize(code: String, file_name: &str) -> Vec<Token> {
             line: line,
             index: index,
           });
+          found = true;
+          break;
         }
+      }
+      
+      if !found {
+        output::error(format!("Unrecognized token '{}'", substr).as_str())
       }
     }
   }
