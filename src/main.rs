@@ -1,3 +1,13 @@
+#[macro_use]
+extern crate clap;
+
 fn main() {
-  println!("Hello, world!");
+  let matches = clap_app!(app =>
+    (name: "kunai")
+    (version: "0.1.0")
+    (@subcommand build =>
+      (about: "Builds an executable from the specified module")
+      (@arg INPUT: +required "The module to build")
+    )
+  ).get_matches();
 }
