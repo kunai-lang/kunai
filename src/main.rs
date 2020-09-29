@@ -2,10 +2,11 @@
 extern crate clap;
 
 mod output;
+mod subcommands;
 
 use std::env;
-use std::path::PathBuf;
 use std::fs;
+use std::path::PathBuf;
 
 fn main() {
   let matches = clap_app!(app =>
@@ -15,7 +16,8 @@ fn main() {
       (about: "Builds an executable from the specified module")
       (@arg INPUT: +required "The module to build")
     )
-  ).get_matches();
+  )
+  .get_matches();
 
   if let Some(matches) = matches.subcommand_matches("build") {
     let input = matches.value_of("INPUT").unwrap();
@@ -35,12 +37,16 @@ fn main() {
       output::error_error(final_path.as_ref().err().unwrap());
     }
 
-    let contents = fs::read_to_string(final_path.ok().unwrap());
+    let contents = fs::read_to_string(final_path.as_ref().ok().unwrap());
 
     if contents.as_ref().is_err() {
       output::error_error(contents.as_ref().err().unwrap());
     }
-    
+
     let text = contents.ok().unwrap();
+    let tokens = subcommands::build::tokenizer::tokenize(
+      text,
+      final_path.as_ref().ok().unwrap().to_str().unwrap(),
+    );
   }
 }
