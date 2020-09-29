@@ -35,6 +35,12 @@ fn main() {
       output::error_error(final_path.as_ref().err().unwrap());
     }
 
-    println!("{}", final_path.ok().unwrap().to_str().unwrap())
+    let contents = fs::read_to_string(final_path.ok().unwrap());
+
+    if contents.as_ref().is_err() {
+      output::error_error(contents.as_ref().err().unwrap());
+    }
+    
+    let text = contents.ok().unwrap();
   }
 }
