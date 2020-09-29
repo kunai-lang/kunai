@@ -87,7 +87,7 @@ pub fn tokenize(code: String, file_name: &str) -> Vec<Token> {
   let comment_exp = Regex::new("^#.*$").unwrap();
   let white_space_exp = Regex::new("^\\s").unwrap();
 
-  let mut line: usize = 0;
+  let mut line: usize = 1;
   let mut line_length: usize = 0;
 
   let mut tokens: Vec<Token> = Vec::new();
@@ -119,7 +119,7 @@ pub fn tokenize(code: String, file_name: &str) -> Vec<Token> {
       }
       
       if !found {
-        output::error(format!("Unrecognized token '{}'", substr).as_str())
+        output::error(format!("{}:{}:{} Unrecognized token '{}'", file_name, line, index, substr).as_str())
       }
     }
   }
