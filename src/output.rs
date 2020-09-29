@@ -11,6 +11,7 @@ pub fn error(message: &str) {
   buffer.set_color(ColorSpec::new().set_reset(true)).expect("");
   writeln!(&mut buffer, "{}", message).expect("");
   bufwtr.print(&buffer).expect("");
+  std::process::exit(-1);
 }
 
 pub fn error_error(message: &dyn std::error::Error) {
@@ -21,4 +22,5 @@ pub fn error_error(message: &dyn std::error::Error) {
   buffer.set_color(ColorSpec::new().set_reset(true)).expect("");
   writeln!(&mut buffer, "{}", message.to_string()).expect("");
   bufwtr.print(&buffer).expect("");
+  std::process::exit(-1);
 }

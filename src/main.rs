@@ -4,6 +4,8 @@ extern crate clap;
 mod output;
 
 use std::env;
+use std::path::PathBuf;
+use std::fs;
 
 fn main() {
   let matches = clap_app!(app =>
@@ -22,5 +24,17 @@ fn main() {
     if cwd.as_ref().is_err() {
       output::error_error(cwd.as_ref().err().unwrap());
     }
+
+    let mut file_path = PathBuf::new();
+    file_path.push(cwd.unwrap());
+    file_path.push(input);
+
+    let final_path = fs::canonicalize(file_path);
+
+    if final_path.as_ref().is_err() {
+      output::error_error(final_path.as_ref().err().unwrap());
+    }
+
+    println!("{}", final_path.ok().unwrap().to_str().unwrap())
   }
 }
