@@ -1,2 +1,2 @@
-funct main(environment env) (void) {
+funct main() (void) {
 }
