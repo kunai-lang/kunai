@@ -1,2 +1,2 @@
-funct main() (void) {
+funct main(args []string) (void) {
 }
