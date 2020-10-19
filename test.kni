@@ -1,2 +1,2 @@
-funct main(args []string) (void) {
-}
+funct main(args []string) (void)
+end
